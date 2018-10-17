@@ -1,0 +1,28 @@
+package pl.coderslab.Controller;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet(name = "Cookie4Del", urlPatterns = "/Cookie4Del")
+public class Cookie4Del extends HttpServlet
+{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String cname = request.getParameter("cname");
+        Cookie cookie = new Cookie(cname, "");
+        cookie.setMaxAge(0); // expires in 0 = delete
+        response.addCookie(cookie);
+
+        response.getWriter().append("Usunięto ciasteczko `" + cname + "`");
+    }
+}

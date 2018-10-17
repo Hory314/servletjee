@@ -62,6 +62,6 @@ public class Post5 extends HttpServlet
 
     private double celcToFahr(double degree)
     {
-        return (32 + ((9 * degree) / (5)));
+        return (32.0 + ((9.0 * degree) / (5.0)));
     }
 }
