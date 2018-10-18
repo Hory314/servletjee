@@ -19,17 +19,32 @@ public class Sess06 extends HttpServlet
         response.setContentType("text/html");
         Writer wr = response.getWriter();
 
-        HttpSession session = request.getSession();
-        int number1 = (int)session.getAttribute("number1");
-        int number2 = (int)session.getAttribute("number2");
+        try
+        {
+            HttpSession session = request.getSession();
+            int number1 = (int)session.getAttribute("number1");
+            int number2 = (int)session.getAttribute("number2");
 
-        int addResult = Integer.parseInt(request.getParameter("add"));
-        int subResult = Integer.parseInt(request.getParameter("sub"));
-        int multResult = Integer.parseInt(request.getParameter("mult"));
+            int addResult = Integer.parseInt(request.getParameter("add"));
+            int subResult = Integer.parseInt(request.getParameter("sub"));
+            int multResult = Integer.parseInt(request.getParameter("mult"));
 
-        wr.append(number1 + " + " + number2 + " = " + addResult + " -> " + ((number1 + number2) == addResult ? "Correct" : "Wrong") + "<br>");
-        wr.append(number1 + " - " + number2 + " = " + subResult + " -> " + ((number1 - number2) == subResult ? "Correct" : "Wrong") + "<br>");
-        wr.append(number1 + " * " + number2 + " = " + multResult + " -> " + ((number1 * number2) == multResult ? "Correct" : "Wrong") + "<br>");
+            wr.append(number1 + " + " + number2 + " = " + addResult + " -> " + ((number1 + number2) == addResult ? "Correct" : "Wrong") + "<br>");
+            wr.append(number1 + " - " + number2 + " = " + subResult + " -> " + ((number1 - number2) == subResult ? "Correct" : "Wrong") + "<br>");
+            wr.append(number1 + " * " + number2 + " = " + multResult + " -> " + ((number1 * number2) == multResult ? "Correct" : "Wrong") + "<br>");
+        }
+        catch(NumberFormatException e)
+        {
+            System.err.println("Podane dane nie są liczbami.");
+            wr.append("Podane dane nie są liczbami.");
+            doGet(request, response);
+        }
+        catch(NullPointerException e)
+        {
+            System.err.println("Nie ma utworzonej sesji.");
+            wr.append("Nie ma utworzonej sesji.");
+            doGet(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -52,6 +67,6 @@ public class Sess06 extends HttpServlet
         wr.append("<label>" + rand1 + " * " + rand2 + " = <input type='number' name='mult'></label><br>");
         wr.append("<input type='submit'><br>");
         wr.append("</form>");
-
+//todo 7 zad
     }
 }
